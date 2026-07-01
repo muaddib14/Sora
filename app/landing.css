@@ -1,0 +1,1072 @@
+/* SORA landing — ported 1:1 from sora_landing_interactive.html, scoped under .sora-landing */
+
+/* Light mode theme */
+html[data-theme='light'] .sora-landing {
+  --bg: #f1f2f5;
+  --bg-2: #e9eaee;
+  --panel: #ffffff;
+  --panel-2: #fbfbfc;
+  --line: #e2e4ea;
+  --line-soft: #edeef2;
+  --ink: #16171c;
+  --ink-dim: #5a5d68;
+  --ink-faint: #9a9da8;
+  --pink: #ff5c8a;
+  --pink-soft: #ff85a8;
+  --green: #43e08a;
+  --amber: #f6c452;
+  --red: #ff5a5f;
+  --mono: 'Space Mono', ui-monospace, monospace;
+  --disp: 'Clash Display', system-ui, sans-serif;
+  --body: 'Switzer', system-ui, sans-serif;
+}
+
+/* Dark mode theme (default) */
+.sora-landing {
+  --bg: #0c0e13;
+  --bg-2: #0f1219;
+  --panel: #141822;
+  --panel-2: #181d28;
+  --line: #4b4d53;
+  --line-soft: #1c222e;
+  --ink: #e9edf4;
+  --ink-dim: #9aa3b4;
+  --ink-faint: #5d6678;
+  --pink: #ff5c8a;
+  --pink-soft: #ff85a8;
+  --green: #43e08a;
+  --amber: #f6c452;
+  --red: #ff5a5f;
+  --mono: 'Space Mono', ui-monospace, monospace;
+  --disp: 'Clash Display', system-ui, sans-serif;
+  --body: 'Switzer', system-ui, sans-serif;
+
+  position: relative;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--body);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+.sora-landing * {
+  box-sizing: border-box;
+}
+.sora-landing::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(1100px 600px at 78% -5%, rgba(255, 92, 138, 0.1), transparent 60%),
+    radial-gradient(900px 500px at 8% 8%, rgba(67, 224, 138, 0.05), transparent 60%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.35), transparent 18%),
+    linear-gradient(var(--line-soft) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+  background-size: auto, auto, auto, 46px 46px, 46px 46px;
+  opacity: 0.5;
+}
+
+/* Light mode backdrop — keep faint grid + soft brand tints, drop the dark vignette */
+html[data-theme='light'] .sora-landing::before {
+  opacity: 1;
+  background:
+    radial-gradient(1100px 600px at 78% -5%, rgba(255, 92, 138, 0.06), transparent 60%),
+    radial-gradient(900px 500px at 8% 8%, rgba(67, 224, 138, 0.04), transparent 60%),
+    linear-gradient(var(--line-soft) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+  background-size: auto, auto, 46px 46px, 46px 46px;
+}
+
+/* Light mode card depth — soft shadows so white panels lift off the gray bg */
+html[data-theme='light'] .sora-landing .step,
+html[data-theme='light'] .sora-landing .ucard,
+html[data-theme='light'] .sora-landing .token-side,
+html[data-theme='light'] .sora-landing .about,
+html[data-theme='light'] .sora-landing .console,
+html[data-theme='light'] .sora-landing .network {
+  box-shadow: 0 1px 2px rgba(20, 22, 30, 0.04), 0 6px 20px -8px rgba(20, 22, 30, 0.1);
+}
+html[data-theme='light'] .sora-landing .step:hover,
+html[data-theme='light'] .sora-landing .ucard:hover {
+  box-shadow: 0 2px 4px rgba(20, 22, 30, 0.06), 0 12px 28px -10px rgba(255, 92, 138, 0.22);
+}
+html[data-theme='light'] .sora-landing .telemetry,
+html[data-theme='light'] .sora-landing .ca {
+  box-shadow: 0 1px 2px rgba(20, 22, 30, 0.04), 0 6px 20px -10px rgba(20, 22, 30, 0.08);
+}
+/* Lighten the heavy drop-shadow the console carries from dark mode */
+html[data-theme='light'] .sora-landing .console {
+  box-shadow: 0 1px 2px rgba(20, 22, 30, 0.05), 0 18px 50px -28px rgba(20, 22, 30, 0.18);
+}
+.sora-landing .wrap {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 1;
+}
+.sora-landing a {
+  color: inherit;
+  text-decoration: none;
+}
+.sora-landing .mono {
+  font-family: var(--mono);
+}
+.sora-landing .dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 0 0 rgba(67, 224, 138, 0.6);
+  animation: sora-pulse 2.4s infinite;
+}
+.sora-landing .dot.amber {
+  background: var(--amber);
+  animation-name: sora-pulseA;
+}
+.sora-landing .dot.red {
+  background: var(--red);
+}
+@keyframes sora-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(67, 224, 138, 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 7px rgba(67, 224, 138, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(67, 224, 138, 0);
+  }
+}
+@keyframes sora-pulseA {
+  0% {
+    box-shadow: 0 0 0 0 rgba(246, 196, 82, 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 7px rgba(246, 196, 82, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(246, 196, 82, 0);
+  }
+}
+.sora-landing header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  backdrop-filter: blur(10px);
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+}
+.sora-landing .bar {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  height: 60px;
+}
+.sora-landing .brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--disp);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  font-size: 15px;
+}
+.sora-landing .nav {
+  display: flex;
+  gap: 26px;
+  margin-left: 8px;
+}
+.sora-landing .nav a {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  color: var(--ink-dim);
+  letter-spacing: 0.04em;
+  transition: color 0.15s;
+}
+.sora-landing .nav a:hover {
+  color: var(--ink);
+}
+.sora-landing .bar .spacer {
+  flex: 1;
+}
+.sora-landing .status-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: var(--ink-dim);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 6px 12px;
+  background: var(--panel);
+}
+.sora-landing .btn {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  border-radius: 8px;
+  padding: 9px 15px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: transform 0.12s, background 0.15s, border-color 0.15s, box-shadow 0.2s;
+  display: inline-block;
+}
+.sora-landing .btn:active {
+  transform: translateY(1px);
+}
+.sora-landing .btn-pink {
+  background: var(--pink);
+  color: #1a0710;
+  font-weight: 700;
+}
+.sora-landing .btn-pink:hover {
+  background: var(--pink-soft);
+  box-shadow: 0 0 24px -6px rgba(255, 92, 138, 0.6);
+}
+.sora-landing .btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--line);
+}
+.sora-landing .btn-ghost:hover {
+  border-color: var(--pink);
+  color: var(--pink-soft);
+}
+.sora-landing .hero {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 40px;
+  align-items: center;
+  padding: 54px 0 36px;
+}
+.sora-landing .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  color: var(--green);
+  border: 1px solid var(--line);
+  background: var(--panel);
+  padding: 7px 13px;
+  border-radius: 999px;
+  text-transform: uppercase;
+}
+.sora-landing h1 {
+  font-family: var(--disp);
+  font-weight: 700;
+  font-size: clamp(40px, 6.4vw, 76px);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  margin: 22px 0 0;
+}
+.sora-landing .trust-strip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line-soft);
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.04em;
+  color: var(--ink-dim);
+}
+.sora-landing .trust-strip .sep {
+  color: var(--ink-faint);
+}
+.sora-landing .trust-strip > span:first-child {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--ink);
+}
+.sora-landing h1 .hl {
+  color: var(--pink);
+}
+.sora-landing .lede {
+  color: var(--ink-dim);
+  font-size: clamp(15px, 1.7vw, 18px);
+  max-width: 30em;
+  margin: 20px 0 0;
+}
+.sora-landing .lede b {
+  color: var(--ink);
+  font-weight: 600;
+}
+.sora-landing .cta-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+.sora-landing .btn-lg {
+  padding: 13px 22px;
+  font-size: 13.5px;
+}
+.sora-landing .ticker-note {
+  margin-top: 18px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink-faint);
+}
+.sora-landing .ticker-note span {
+  color: var(--pink-soft);
+}
+.sora-landing .console {
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden;
+  background: linear-gradient(180deg, var(--panel-2), var(--panel));
+  box-shadow: 0 30px 80px -40px rgba(0, 0, 0, 0.9);
+}
+.sora-landing .console-top {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-faint);
+}
+.sora-landing .console-top .tdot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--line);
+}
+.sora-landing .console-top .tlabel {
+  margin-left: 8px;
+  letter-spacing: 0.06em;
+}
+.sora-landing .console-body {
+  position: relative;
+  /* depth: inner top glow so the panel reads as elevated, not flat */
+  background:
+    radial-gradient(120% 80% at 50% 0%, rgba(255, 92, 138, 0.07), transparent 60%),
+    linear-gradient(180deg, var(--panel-2), var(--panel));
+}
+/* NOC environment behind the (transparent) model canvas — fills the void */
+.sora-landing .console-body::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    /* soft pink key glow behind her */
+    radial-gradient(60% 55% at 50% 32%, rgba(255, 92, 138, 0.16), transparent 62%),
+    /* cool fill from upper-left */
+    radial-gradient(50% 45% at 18% 18%, rgba(67, 224, 138, 0.06), transparent 60%),
+    /* faint server-rack / topology grid */
+    linear-gradient(rgba(154, 163, 180, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(154, 163, 180, 0.045) 1px, transparent 1px);
+  background-size: auto, auto, 30px 30px, 30px 30px;
+}
+/* floor gradient grounds her so she isn't floating */
+.sora-landing .console-body::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 42%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Dark mode floor gradient */
+html:not([data-theme='light']) .sora-landing .console-body::after {
+  background: linear-gradient(180deg, transparent, rgba(255, 92, 138, 0.05) 60%, rgba(8, 10, 14, 0.55));
+}
+
+/* Light mode floor gradient */
+html[data-theme='light'] .sora-landing .console-body::after {
+  background: linear-gradient(180deg, transparent, rgba(255, 92, 138, 0.08) 60%, rgba(200, 200, 210, 0.3));
+}
+/* canvas + overlays sit above the backdrop */
+.sora-landing .console-body > canvas,
+.sora-landing .console-body > img,
+.sora-landing .console-body > .ov {
+  position: relative;
+  z-index: 1;
+}
+.sora-landing .console-body img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.sora-landing .ov {
+  position: absolute;
+  font-family: var(--mono);
+  background: var(--panel);
+  opacity: 0.95;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  padding: 9px 12px;
+  backdrop-filter: blur(4px);
+}
+.sora-landing .ov-up {
+  top: 14px;
+  left: 14px;
+}
+.sora-landing .ov-up .big {
+  font-size: 20px;
+  color: var(--green);
+  font-weight: 700;
+}
+.sora-landing .ov-up .cap {
+  font-size: 9.5px;
+  color: var(--ink-faint);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.sora-landing .ov-rps {
+  bottom: 14px;
+  right: 14px;
+  text-align: right;
+}
+.sora-landing .ov-rps .big {
+  font-size: 18px;
+  color: var(--pink-soft);
+  font-weight: 700;
+}
+.sora-landing .ov-rps .cap {
+  font-size: 9.5px;
+  color: var(--ink-faint);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.sora-landing .telemetry-cap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 10px;
+}
+.sora-landing .telemetry {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--panel);
+  margin: 8px 0 4px;
+}
+.sora-landing .tcell {
+  padding: 20px 22px;
+  border-right: 1px solid var(--line-soft);
+}
+.sora-landing .tcell:last-child {
+  border-right: none;
+}
+.sora-landing .tcell .num {
+  font-family: var(--mono);
+  font-size: 26px;
+  font-weight: 700;
+}
+.sora-landing .tcell .lbl {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-faint);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-top: 6px;
+}
+.sora-landing .c-green {
+  color: var(--green);
+}
+.sora-landing .c-pink {
+  color: var(--pink-soft);
+}
+.sora-landing .c-amber {
+  color: var(--amber);
+}
+.sora-landing section {
+  padding: 72px 0;
+  position: relative;
+  z-index: 1;
+}
+.sora-landing .sec-eyebrow {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  color: var(--pink);
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.sora-landing .sec-eyebrow::before {
+  content: '';
+  width: 26px;
+  height: 1px;
+  background: var(--pink);
+  display: inline-block;
+}
+.sora-landing h2 {
+  font-family: var(--disp);
+  font-weight: 700;
+  font-size: clamp(28px, 3.6vw, 42px);
+  letter-spacing: -0.02em;
+  margin: 16px 0 0;
+  line-height: 1.05;
+}
+.sora-landing .sec-sub {
+  color: var(--ink-dim);
+  max-width: 46em;
+  margin: 14px 0 0;
+  font-size: 15.5px;
+}
+.sora-landing .network {
+  position: relative;
+  margin-top: 30px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  overflow: hidden;
+  background: radial-gradient(120% 120% at 50% 0%, var(--panel-2), var(--panel));
+  height: 460px;
+}
+.sora-landing .network canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: crosshair;
+}
+.sora-landing .net-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 22px;
+}
+.sora-landing .net-stats {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.sora-landing .net-stat {
+  font-family: var(--mono);
+  background: var(--panel);
+  opacity: 0.9;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 10px 14px;
+  backdrop-filter: blur(5px);
+}
+.sora-landing .net-stat .n {
+  font-size: 19px;
+  font-weight: 700;
+}
+.sora-landing .net-stat .l {
+  font-size: 9.5px;
+  color: var(--ink-faint);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-top: 3px;
+}
+.sora-landing .net-hint {
+  align-self: flex-end;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  color: var(--ink-faint);
+  letter-spacing: 0.08em;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+.sora-landing .net-legend {
+  display: flex;
+  gap: 18px;
+  margin-top: 18px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-dim);
+  flex-wrap: wrap;
+}
+.sora-landing .net-legend span {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.sora-landing .lg {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+.sora-landing .lg.g {
+  background: var(--green);
+}
+.sora-landing .lg.p {
+  background: var(--pink);
+}
+.sora-landing .lg.r {
+  background: var(--red);
+}
+.sora-landing .steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 42px;
+}
+.sora-landing .step {
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  background: var(--panel);
+  padding: 22px;
+  transition: border-color 0.18s, transform 0.18s;
+}
+.sora-landing .step:hover {
+  border-color: var(--pink);
+  transform: translateY(-3px);
+}
+.sora-landing .step .idx {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--pink-soft);
+  letter-spacing: 0.1em;
+}
+.sora-landing .step h3 {
+  font-family: var(--disp);
+  font-weight: 600;
+  font-size: 18px;
+  margin: 14px 0 0;
+}
+.sora-landing .step p {
+  color: var(--ink-dim);
+  font-size: 14px;
+  margin: 9px 0 0;
+}
+.sora-landing .step .tag {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  margin-top: 14px;
+  color: var(--ink-faint);
+  border: 1px solid var(--line-soft);
+  border-radius: 6px;
+  padding: 4px 8px;
+  display: inline-block;
+}
+.sora-landing .token-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin-top: 42px;
+}
+.sora-landing .util {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.sora-landing .ucard {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--panel);
+  padding: 18px;
+  transition: border-color 0.18s, transform 0.18s;
+}
+.sora-landing .ucard:hover {
+  border-color: var(--pink);
+  transform: translateY(-2px);
+}
+.sora-landing .ucard .h {
+  font-family: var(--disp);
+  font-weight: 600;
+  font-size: 15.5px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.sora-landing .ucard .h .ic {
+  width: 7px;
+  height: 7px;
+  border-radius: 2px;
+  background: var(--pink);
+}
+.sora-landing .ucard p {
+  color: var(--ink-dim);
+  font-size: 13px;
+  margin: 8px 0 0;
+}
+.sora-landing .token-side {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: linear-gradient(180deg, var(--panel-2), var(--panel));
+  padding: 26px;
+  display: flex;
+  flex-direction: column;
+}
+.sora-landing .token-side .tk {
+  font-family: var(--disp);
+  font-weight: 700;
+  font-size: 30px;
+  letter-spacing: 0.02em;
+}
+.sora-landing .token-side .tk .d {
+  color: var(--pink);
+}
+.sora-landing .token-side .desc {
+  color: var(--ink-dim);
+  font-size: 14px;
+  margin: 12px 0 0;
+}
+.sora-landing .ca {
+  margin-top: 20px;
+  border: 1px dashed var(--line);
+  border-radius: 9px;
+  padding: 12px 14px;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: var(--ink-dim);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+.sora-landing .ca .lbl {
+  color: var(--ink-faint);
+  letter-spacing: 0.1em;
+}
+.sora-landing .ca .val {
+  color: var(--ink);
+}
+.sora-landing .token-side .btn {
+  margin-top: 18px;
+  text-align: center;
+}
+.sora-landing .note {
+  margin-top: 16px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  color: var(--ink-faint);
+  line-height: 1.6;
+}
+.sora-landing .about {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--panel);
+  padding: 28px;
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 24px;
+  align-items: center;
+}
+.sora-landing .about .mark {
+  width: 54px;
+  height: 54px;
+  flex: none;
+}
+.sora-landing .about p {
+  margin: 0;
+  color: var(--ink-dim);
+  font-size: 14.5px;
+}
+.sora-landing .about p b {
+  color: var(--ink);
+}
+.sora-landing .about a.src {
+  color: var(--pink-soft);
+  border-bottom: 1px solid rgba(255, 133, 168, 0.4);
+}
+.sora-landing footer {
+  border-top: 1px solid var(--line);
+  padding: 34px 0 50px;
+  position: relative;
+  z-index: 1;
+}
+.sora-landing .foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.sora-landing .foot .l {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  font-family: var(--disp);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  font-size: 14px;
+}
+.sora-landing .foot .links {
+  display: flex;
+  gap: 22px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink-dim);
+}
+.sora-landing .foot .links a:hover {
+  color: var(--pink-soft);
+}
+.sora-landing .foot .fine {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-faint);
+}
+.sora-landing .reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.7s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.sora-landing .reveal.in {
+  opacity: 1;
+  transform: none;
+}
+.sora-landing .load-in {
+  opacity: 0;
+  transform: translateY(16px);
+  animation: sora-loadIn 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+}
+.sora-landing .d1 {
+  animation-delay: 0.05s;
+}
+.sora-landing .d2 {
+  animation-delay: 0.16s;
+}
+.sora-landing .d3 {
+  animation-delay: 0.28s;
+}
+.sora-landing .d4 {
+  animation-delay: 0.4s;
+}
+@keyframes sora-loadIn {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (max-width: 880px) {
+  .sora-landing .hero {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    padding: 40px 0 28px;
+  }
+  .sora-landing .console {
+    max-width: 420px;
+    margin: 0 auto;
+  }
+  .sora-landing .telemetry {
+    grid-template-columns: 1fr 1fr;
+  }
+  .sora-landing .tcell:nth-child(2) {
+    border-right: none;
+  }
+  .sora-landing .tcell:nth-child(1),
+  .sora-landing .tcell:nth-child(2) {
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .sora-landing .steps {
+    grid-template-columns: 1fr 1fr;
+  }
+  .sora-landing .token-grid {
+    grid-template-columns: 1fr;
+  }
+  .sora-landing .nav,
+  .sora-landing .status-chip {
+    display: none;
+  }
+  .sora-landing .about {
+    grid-template-columns: 1fr;
+  }
+  .sora-landing .network {
+    height: 380px;
+  }
+}
+@media (max-width: 520px) {
+  .sora-landing .steps,
+  .sora-landing .util {
+    grid-template-columns: 1fr;
+  }
+  .sora-landing .network {
+    height: 320px;
+  }
+}
+.sora-landing .marquee-band {
+  margin: 14px 0;
+  padding: 20px 0;
+  border-top: 1px solid var(--line-soft);
+  border-bottom: 1px solid var(--line-soft);
+  background: var(--bg-2);
+}
+.sora-landing .marquee-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+}
+.sora-landing .marquee-label .dotp {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--pink);
+  display: inline-block;
+}
+.sora-landing .marquee-viewport {
+  position: relative;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+}
+.sora-landing .marquee-track {
+  display: flex;
+  width: max-content;
+  animation: sora-marquee 40s linear infinite;
+}
+.sora-landing .marquee-track.rev {
+  animation-duration: 32s;
+  animation-direction: reverse;
+}
+.sora-landing .marquee-viewport:hover .marquee-track {
+  animation-play-state: paused;
+}
+.sora-landing .marquee-group {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  padding-right: 32px;
+}
+.sora-landing .mq-brand {
+  font-family: var(--body);
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--ink-dim);
+  transition: color 0.2s;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.sora-landing .mq-brand:hover {
+  color: var(--ink);
+}
+.sora-landing .mq-brand svg {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  color: var(--ink-dim);
+  transition: color 0.2s;
+}
+.sora-landing .mq-brand:hover svg {
+  color: var(--ink);
+}
+.sora-landing .mq-brand span {
+  color: var(--ink-dim);
+}
+.sora-landing .mq-svc {
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: 13.5px;
+  letter-spacing: 0.07em;
+  color: var(--ink-dim);
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.sora-landing .mq-svc svg,
+.sora-landing .mq-svc svg * {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  color: var(--ink-dim);
+}
+.sora-landing .mq-svc:hover svg,
+.sora-landing .mq-svc:hover svg * {
+  color: var(--pink-soft);
+}
+.sora-landing .mq-svc .dot {
+  display: inline-block;
+  flex-shrink: 0;
+}
+.sora-landing .mq-svc:hover {
+  color: var(--pink-soft);
+}
+.sora-landing .mq-sep {
+  color: var(--pink);
+  font-size: 9px;
+}
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--line);
+  color: var(--ink-dim);
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+  flex-shrink: 0;
+}
+.theme-toggle:hover {
+  color: var(--ink);
+  border-color: var(--ink-dim);
+}
+@keyframes sora-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-33.333%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sora-landing .dot,
+  .sora-landing .load-in {
+    animation: none !important;
+  }
+  .sora-landing .load-in {
+    opacity: 1;
+    transform: none;
+  }
+  .sora-landing .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .sora-landing .marquee-track {
+    animation: none !important;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px 0;
+    width: auto;
+  }
+  .sora-landing .marquee-viewport {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+}
