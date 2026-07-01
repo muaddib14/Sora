@@ -5,7 +5,7 @@ export interface ShareScoreData {
   timeSec: number;
   rank?: number;
   seed: string;
-  wallet?: string;
+  wallet?: string | null;
 }
 
 export function formatTime(seconds: number): string {
