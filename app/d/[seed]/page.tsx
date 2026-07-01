@@ -7,17 +7,20 @@ export async function generateMetadata({
   params,
   searchParams,
 }: {
-  params: { seed: string };
-  searchParams: { beat?: string; r?: string; t?: string };
+  params: Promise<{ seed: string }>;
+  searchParams: Promise<{ beat?: string; r?: string; t?: string }>;
 }): Promise<Metadata> {
-  const q = new URLSearchParams({ seed: params.seed });
-  if (searchParams.beat) q.set('score', searchParams.beat);
-  if (searchParams.r) q.set('r', searchParams.r);
-  if (searchParams.t) q.set('time', searchParams.t);
+  const { seed } = await params;
+  const sp = await searchParams;
+
+  const q = new URLSearchParams({ seed });
+  if (sp.beat) q.set('score', sp.beat);
+  if (sp.r) q.set('r', sp.r);
+  if (sp.t) q.set('time', sp.t);
   const cardUrl = `https://www.playsora.xyz/api/card?${q.toString()}`;
 
-  const title = searchParams.beat
-    ? `Beat ${parseInt(searchParams.beat).toLocaleString()} pts on $SORA daily`
+  const title = sp.beat
+    ? `Beat ${parseInt(sp.beat).toLocaleString()} pts on $SORA daily`
     : 'SORA Daily Challenge';
 
   return {
@@ -35,13 +38,15 @@ export async function generateMetadata({
 }
 
 type ChallengePageProps = {
-  params: { seed: string };
-  searchParams: { beat?: string; r?: string; t?: string };
+  params: Promise<{ seed: string }>;
+  searchParams: Promise<{ beat?: string; r?: string; t?: string }>;
 };
 
-export default function ChallengePage({ params, searchParams }: ChallengePageProps) {
-  const beatScore = searchParams.beat;
-  const rank = searchParams.r;
+export default async function ChallengePage({ params, searchParams }: ChallengePageProps) {
+  const { seed } = await params;
+  const sp = await searchParams;
+  const beatScore = sp.beat;
+  const rank = sp.r;
 
   return (
     <div className="sora-landing" style={{ minHeight: '100vh', position: 'relative' }}>
@@ -124,7 +129,7 @@ export default function ChallengePage({ params, searchParams }: ChallengePagePro
               }}>
                 <div style={{ fontSize: 11, color: 'var(--ink-faint)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>Daily Seed</div>
                 <div style={{ fontSize: 16, fontWeight: 700, fontFamily: 'monospace', color: 'var(--ink)', wordBreak: 'break-all' }}>
-                  {params.seed}
+                  {seed}
                 </div>
               </div>
             </div>
