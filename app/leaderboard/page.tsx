@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { ThemeToggle } from '@/components/theme-toggle';
+import { shareScore } from '@/lib/share';
 import '../landing.css';
 
 interface LeaderboardScore {
@@ -146,11 +147,11 @@ export default function LeaderboardPage() {
                     <div style={{ background: 'var(--panel)', border: '1px solid var(--line)', borderRadius: 16, overflow: 'hidden' }}>
                         {/* table header */}
                         <div style={{
-                            display: 'grid', gridTemplateColumns: '56px 1fr 120px 100px 100px 120px',
+                            display: 'grid', gridTemplateColumns: '56px 1fr 120px 100px 100px 120px 40px',
                             padding: '12px 24px', borderBottom: '1px solid var(--line)',
                             background: 'var(--panel-2)',
                         }}>
-                            {['#', 'Operator', 'Score', 'Time', 'Rep', 'Date'].map(h => (
+                            {['#', 'Operator', 'Score', 'Time', 'Rep', 'Date', ''].map(h => (
                                 <div key={h} style={{ fontSize: 11, color: col.label, fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase' }}>{h}</div>
                             ))}
                         </div>
@@ -159,7 +160,7 @@ export default function LeaderboardPage() {
                             const badge = rankBadge(idx);
                             return (
                                 <div key={score.id} style={{
-                                    display: 'grid', gridTemplateColumns: '56px 1fr 120px 100px 100px 120px',
+                                    display: 'grid', gridTemplateColumns: '56px 1fr 120px 100px 100px 120px 40px',
                                     padding: '16px 24px', borderBottom: '1px solid var(--line-soft)',
                                     alignItems: 'center',
                                     transition: 'background .15s',
@@ -215,6 +216,24 @@ export default function LeaderboardPage() {
                                     <div style={{ fontSize: 12, color: col.label }}>
                                         {new Date(score.created_at).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: '2-digit' })}
                                     </div>
+
+                                    {/* share */}
+                                    <button
+                                        onClick={() => shareScore({
+                                            score: score.score,
+                                            timeSec: score.elapsed_ms / 1000,
+                                            rank: idx + 1,
+                                            seed: new Date().toISOString().split('T')[0],
+                                        })}
+                                        style={{
+                                            background: 'transparent', border: 'none', color: 'var(--pink)',
+                                            cursor: 'pointer', padding: 0, lineHeight: 0,
+                                            fontSize: 18,
+                                        }}
+                                        title="Share score"
+                                    >
+                                        ✦
+                                    </button>
                                 </div>
                             );
                         })}

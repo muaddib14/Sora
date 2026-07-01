@@ -13,6 +13,7 @@ import {
 import { submitScore } from '@/lib/score-submit';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { useTheme } from '@/lib/theme';
+import { shareScore } from '@/lib/share';
 import '../landing.css';
 
 interface GameEvent {
@@ -310,6 +311,24 @@ export default function PlayPage() {
                                 {submitStatus.message}
                             </div>
                         )}
+
+                        <button
+                            onClick={() => currentScore && shareScore({
+                                score: currentScore.score,
+                                timeSec: currentScore.elapsedMs / 1000,
+                                rank: undefined, // TODO: get rank from leaderboard
+                                seed: new Date().toISOString().split('T')[0],
+                                wallet,
+                            })}
+                            style={{
+                                width: '100%', padding: '14px', marginBottom: 12,
+                                background: 'var(--pink)', border: '1px solid rgba(255,92,138,.4)',
+                                borderRadius: 12, color: '#fff',
+                                fontSize: 15, fontWeight: 700, cursor: 'pointer',
+                                fontFamily: "'Clash Display', sans-serif", letterSpacing: '0.03em',
+                            }}>
+                            ✦ Share Score
+                        </button>
 
                         {wallet ? (
                             submitStatus.type === 'success' ? (
