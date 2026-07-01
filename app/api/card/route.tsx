@@ -13,6 +13,7 @@ export async function GET(request: Request) {
     const scoreNum = parseInt(score).toLocaleString();
     const rankText = rank ? `Rank #${rank}` : 'Daily Challenge';
     const timeText = time ? `${Math.floor(parseInt(time) / 60)}m ${parseInt(time) % 60}s` : '—';
+    const metaText = `${rankText}  •  ${timeText}`;
 
     return new ImageResponse(
       (
@@ -67,12 +68,9 @@ export async function GET(request: Request) {
                 color: '#9aa3b4',
                 fontWeight: '400',
                 display: 'flex',
-                gap: '24px',
               }}
             >
-              <span style={{ color: '#ff5c8a', fontWeight: '600', display: 'inline' }}>{rankText}</span>
-              <span style={{ display: 'inline' }}>•</span>
-              <span style={{ display: 'inline' }}>{timeText}</span>
+              {metaText}
             </div>
 
             {/* Seed info */}
@@ -84,7 +82,7 @@ export async function GET(request: Request) {
                 display: 'block',
               }}
             >
-              Daily {seed}
+              {`Daily ${seed}`}
             </div>
           </div>
 

@@ -1,24 +1,47 @@
-'use client';
-
-import { useEffect, useState } from 'react';
+import { Metadata } from 'next';
 import Link from 'next/link';
 import { ThemeToggle } from '@/components/theme-toggle';
 import '../../landing.css';
 
-export default function ChallengePage({
+export async function generateMetadata({
   params,
+  searchParams,
 }: {
   params: { seed: string };
-}) {
-  const [beatScore, setBeatScore] = useState<string | undefined>();
-  const [rank, setRank] = useState<string | undefined>();
+  searchParams: { beat?: string; r?: string; t?: string };
+}): Promise<Metadata> {
+  const q = new URLSearchParams({ seed: params.seed });
+  if (searchParams.beat) q.set('score', searchParams.beat);
+  if (searchParams.r) q.set('r', searchParams.r);
+  if (searchParams.t) q.set('time', searchParams.t);
+  const cardUrl = `https://www.playsora.xyz/api/card?${q.toString()}`;
 
-  useEffect(() => {
-    const hash = window.location.hash.slice(1);
-    const params = new URLSearchParams(hash);
-    setBeatScore(params.get('beat') || undefined);
-    setRank(params.get('r') || undefined);
-  }, []);
+  const title = searchParams.beat
+    ? `Beat ${parseInt(searchParams.beat).toLocaleString()} pts on $SORA daily`
+    : 'SORA Daily Challenge';
+
+  return {
+    title,
+    openGraph: {
+      title,
+      images: [{ url: cardUrl, width: 1200, height: 630 }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      images: [cardUrl],
+    },
+  };
+}
+
+type ChallengePageProps = {
+  params: { seed: string };
+  searchParams: { beat?: string; r?: string; t?: string };
+};
+
+export default function ChallengePage({ params, searchParams }: ChallengePageProps) {
+  const beatScore = searchParams.beat;
+  const rank = searchParams.r;
 
   return (
     <div className="sora-landing" style={{ minHeight: '100vh', position: 'relative' }}>

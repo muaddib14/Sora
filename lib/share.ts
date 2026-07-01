@@ -26,9 +26,9 @@ export function buildShareText(data: ShareScoreData): string {
 }
 
 export function shareScore(data: ShareScoreData): void {
-  const { score, seed } = data;
+  const { score, seed, timeSec } = data;
   const base = 'https://www.playsora.xyz';
-  const url = `${base}/d/${seed}#beat=${score}${data.rank ? `&r=${data.rank}` : ''}`;
+  const url = `${base}/d/${seed}?beat=${score}${data.rank ? `&r=${data.rank}` : ''}&t=${Math.round(timeSec)}`;
   const text = buildShareText(data);
 
   const intent =
