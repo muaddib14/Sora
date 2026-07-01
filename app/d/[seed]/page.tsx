@@ -1,20 +1,65 @@
-'use client';
-
-import { useSearchParams } from 'next/navigation';
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ThemeToggle } from '@/components/theme-toggle';
-import { useTheme } from '@/lib/theme';
 import '../../landing.css';
+
+export async function generateMetadata({
+  params,
+  searchParams,
+}: {
+  params: { seed: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+}): Promise<Metadata> {
+  const beatScore = searchParams.beat as string | undefined;
+  const rank = searchParams.r as string | undefined;
+
+  if (!beatScore) {
+    return {
+      title: 'SORA Daily Challenge',
+      description: 'Challenge your friends on today\'s SORA daily survival challenge.',
+    };
+  }
+
+  const score = parseInt(beatScore).toLocaleString();
+  const cardUrl = `https://www.playsora.xyz/api/card?score=${beatScore}&seed=${params.seed}${rank ? `&r=${rank}` : ''}`;
+  const pageUrl = `https://www.playsora.xyz/d/${params.seed}?beat=${beatScore}${rank ? `&r=${rank}` : ''}`;
+
+  return {
+    title: `Beat ${score} on SORA daily`,
+    description: `${rank ? `Rank #${rank} challenged you to beat ${score} pts` : `Challenge: beat ${score} pts`} on today's SORA daily survival challenge. Can you keep the servers alive?`,
+    openGraph: {
+      title: `Beat ${score} on SORA daily`,
+      description: `${rank ? `Rank #${rank} challenged you to beat ${score} pts` : `Challenge: beat ${score} pts`}. Survive and score higher.`,
+      type: 'website',
+      url: pageUrl,
+      siteName: 'SORA',
+      images: [
+        {
+          url: cardUrl,
+          width: 1200,
+          height: 630,
+          alt: `SORA Challenge Card - Beat ${score} pts`,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `Beat ${score} on SORA daily`,
+      description: `Challenge accepted. Can you keep the servers alive?`,
+      images: [cardUrl],
+    },
+  };
+}
 
 export default function ChallengePage({
   params,
+  searchParams,
 }: {
   params: { seed: string };
+  searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  const { theme } = useTheme();
-  const searchParams = useSearchParams();
-  const beatScore = searchParams.get('beat');
-  const rank = searchParams.get('r');
+  const beatScore = searchParams.beat ? (Array.isArray(searchParams.beat) ? searchParams.beat[0] : searchParams.beat) : undefined;
+  const rank = searchParams.r ? (Array.isArray(searchParams.r) ? searchParams.r[0] : searchParams.r) : undefined;
 
   return (
     <div className="sora-landing" style={{ minHeight: '100vh', position: 'relative' }}>
@@ -67,7 +112,7 @@ export default function ChallengePage({
               }}>Beat {parseInt(beatScore).toLocaleString()} pts</div>
               <p style={{
                 fontSize: 14, color: 'var(--ink-dim)', margin: '0 0 20px 0', lineHeight: 1.6,
-              }}>Today's daily challenge from {rank ? `Rank #${rank}` : 'a player'}. Think you can keep the servers alive?</p>
+              }}>Today&apos;s daily challenge from {rank ? `Rank #${rank}` : "a player"}. Think you can keep the servers alive?</p>
               <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
                 <Link href="/play" className="btn btn-pink" style={{ padding: '12px 28px', fontSize: 15 }}>
                   Accept Challenge →
@@ -113,7 +158,7 @@ export default function ChallengePage({
               fontSize: 24, fontWeight: 700, color: 'var(--ink)', fontFamily: "'Clash Display', sans-serif", marginBottom: 12,
             }}>Daily Challenge</div>
             <p style={{ fontSize: 14, color: 'var(--ink-dim)', marginBottom: 24 }}>
-              Share your score from today's daily and challenge your friends. The seed uniquely identifies today's challenge.
+              Share your score from today&apos;s daily and challenge your friends. The seed uniquely identifies today&apos;s challenge.
             </p>
             <Link href="/play" className="btn btn-pink" style={{ padding: '12px 28px', fontSize: 15, display: 'inline-block' }}>
               Play Daily →
