@@ -70,9 +70,9 @@ export async function GET(request: Request) {
                 gap: '24px',
               }}
             >
-              <span style={{ color: '#ff5c8a', fontWeight: '600' }}>{rankText}</span>
-              <span style={{ display: 'block' }}>•</span>
-              <span style={{ display: 'block' }}>{timeText}</span>
+              <span style={{ color: '#ff5c8a', fontWeight: '600', display: 'inline' }}>{rankText}</span>
+              <span style={{ display: 'inline' }}>•</span>
+              <span style={{ display: 'inline' }}>{timeText}</span>
             </div>
 
             {/* Seed info */}
