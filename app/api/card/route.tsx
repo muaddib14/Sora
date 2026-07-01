@@ -24,7 +24,7 @@ export async function GET(request: Request) {
             height: '100%',
             backgroundColor: '#0c0e13',
             color: '#e9edf4',
-            fontFamily: 'system-ui, -apple-system, sans-serif',
+            fontFamily: 'Arial, sans-serif',
             padding: '60px',
             boxSizing: 'border-box',
             justifyContent: 'space-between',
@@ -40,7 +40,7 @@ export async function GET(request: Request) {
                 letterSpacing: '-0.02em',
               }}
             >
-              ◇ SORA
+              SORA
             </div>
           </div>
 
@@ -54,12 +54,13 @@ export async function GET(request: Request) {
                 color: '#ff5c8a',
                 letterSpacing: '-0.03em',
                 lineHeight: '1',
+                display: 'block',
               }}
             >
               {scoreNum}
             </div>
 
-            {/* Metadata */}
+            {/* Metadata row */}
             <div
               style={{
                 fontSize: '28px',
@@ -70,8 +71,8 @@ export async function GET(request: Request) {
               }}
             >
               <span style={{ color: '#ff5c8a', fontWeight: '600' }}>{rankText}</span>
-              <span>•</span>
-              <span>{timeText}</span>
+              <span style={{ display: 'block' }}>•</span>
+              <span style={{ display: 'block' }}>{timeText}</span>
             </div>
 
             {/* Seed info */}
@@ -80,6 +81,7 @@ export async function GET(request: Request) {
                 fontSize: '18px',
                 color: '#5d6678',
                 marginTop: '12px',
+                display: 'block',
               }}
             >
               Daily {seed}
@@ -94,19 +96,21 @@ export async function GET(request: Request) {
               alignItems: 'flex-end',
               borderTop: '1px solid rgba(255,92,138,.2)',
               paddingTop: '40px',
+              gap: '40px',
             }}
           >
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <div style={{ fontSize: '20px', fontWeight: '600', color: '#e9edf4' }}>
+              <div style={{ fontSize: '20px', fontWeight: '600', color: '#e9edf4', display: 'block' }}>
                 playsora.xyz
               </div>
-              <div style={{ fontSize: '16px', color: '#9aa3b4' }}>Keep the servers alive</div>
+              <div style={{ fontSize: '16px', color: '#9aa3b4', display: 'block' }}>Keep the servers alive</div>
             </div>
             <div
               style={{
                 fontSize: '24px',
                 color: '#ff5c8a',
                 fontWeight: '700',
+                display: 'block',
               }}
             >
               $SORA
