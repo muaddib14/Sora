@@ -1,5 +1,4 @@
 import { ImageResponse } from '@vercel/og';
-import React from 'react';
 
 export const runtime = 'nodejs';
 
@@ -20,135 +19,97 @@ export async function GET(request: Request) {
         <div
           style={{
             display: 'flex',
+            flexDirection: 'column',
             width: '100%',
             height: '100%',
             backgroundColor: '#0c0e13',
             color: '#e9edf4',
-            fontFamily: '"Clash Display", "Space Mono", monospace',
+            fontFamily: 'system-ui, -apple-system, sans-serif',
             padding: '60px',
             boxSizing: 'border-box',
-            position: 'relative',
-            overflow: 'hidden',
+            justifyContent: 'space-between',
           }}
         >
-          {/* Accent gradient background */}
-          <div
-            style={{
-              position: 'absolute',
-              top: '-50%',
-              right: '-10%',
-              width: '400px',
-              height: '400px',
-              borderRadius: '50%',
-              background: 'radial-gradient(circle, rgba(255,92,138,0.15) 0%, transparent 70%)',
-              pointerEvents: 'none',
-            }}
-          />
+          {/* Header */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <div
+              style={{
+                fontSize: '32px',
+                fontWeight: '700',
+                color: '#ff5c8a',
+                letterSpacing: '-0.02em',
+              }}
+            >
+              ◇ SORA
+            </div>
+          </div>
 
+          {/* Main content */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            {/* Score */}
+            <div
+              style={{
+                fontSize: '92px',
+                fontWeight: '700',
+                color: '#ff5c8a',
+                letterSpacing: '-0.03em',
+                lineHeight: '1',
+              }}
+            >
+              {scoreNum}
+            </div>
+
+            {/* Metadata */}
+            <div
+              style={{
+                fontSize: '28px',
+                color: '#9aa3b4',
+                fontWeight: '400',
+                display: 'flex',
+                gap: '24px',
+              }}
+            >
+              <span style={{ color: '#ff5c8a', fontWeight: '600' }}>{rankText}</span>
+              <span>•</span>
+              <span>{timeText}</span>
+            </div>
+
+            {/* Seed info */}
+            <div
+              style={{
+                fontSize: '18px',
+                color: '#5d6678',
+                marginTop: '12px',
+              }}
+            >
+              Daily {seed}
+            </div>
+          </div>
+
+          {/* Footer */}
           <div
             style={{
               display: 'flex',
-              flexDirection: 'column',
-              width: '100%',
-              height: '100%',
               justifyContent: 'space-between',
-              position: 'relative',
-              zIndex: 1,
+              alignItems: 'flex-end',
+              borderTop: '1px solid rgba(255,92,138,.2)',
+              paddingTop: '40px',
             }}
           >
-            {/* Header */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '40px' }}>
-              <div
-                style={{
-                  fontSize: '32px',
-                  fontWeight: '700',
-                  color: '#ff5c8a',
-                  fontFamily: '"Clash Display"',
-                  letterSpacing: '-0.02em',
-                }}
-              >
-                ◆ SORA
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <div style={{ fontSize: '20px', fontWeight: '600', color: '#e9edf4' }}>
+                playsora.xyz
               </div>
+              <div style={{ fontSize: '16px', color: '#9aa3b4' }}>Keep the servers alive</div>
             </div>
-
-            {/* Main content */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', flex: 1, justifyContent: 'center' }}>
-              {/* Score */}
-              <div
-                style={{
-                  fontSize: '92px',
-                  fontWeight: '700',
-                  color: '#ff5c8a',
-                  fontFamily: '"Clash Display"',
-                  letterSpacing: '-0.03em',
-                  lineHeight: '1',
-                }}
-              >
-                {scoreNum}
-              </div>
-
-              {/* Metadata */}
-              <div
-                style={{
-                  fontSize: '28px',
-                  color: '#9aa3b4',
-                  fontFamily: '"Space Mono"',
-                  fontWeight: '400',
-                  display: 'flex',
-                  gap: '24px',
-                  alignItems: 'center',
-                }}
-              >
-                <span style={{ color: '#ff5c8a', fontWeight: '600' }}>{rankText}</span>
-                <span>•</span>
-                <span>{timeText}</span>
-              </div>
-
-              {/* Seed info */}
-              <div
-                style={{
-                  fontSize: '18px',
-                  color: '#5d6678',
-                  fontFamily: '"Space Mono"',
-                  marginTop: '12px',
-                }}
-              >
-                Daily {seed}
-              </div>
-            </div>
-
-            {/* Footer */}
             <div
               style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'flex-end',
-                borderTop: '1px solid rgba(255,92,138,.2)',
-                paddingTop: '40px',
+                fontSize: '24px',
+                color: '#ff5c8a',
+                fontWeight: '700',
               }}
             >
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '8px',
-                }}
-              >
-                <div style={{ fontSize: '20px', fontWeight: '600', color: '#e9edf4' }}>
-                  playsora.xyz
-                </div>
-                <div style={{ fontSize: '16px', color: '#9aa3b4' }}>Keep the servers alive</div>
-              </div>
-              <div
-                style={{
-                  fontSize: '24px',
-                  color: '#ff5c8a',
-                  fontWeight: '700',
-                  fontFamily: '"Clash Display"',
-                }}
-              >
-                $SORA
-              </div>
+              $SORA
             </div>
           </div>
         </div>
