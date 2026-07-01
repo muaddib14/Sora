@@ -1,6 +1,6 @@
-import { ImageResponse } from '@vercel/og';
+import { ImageResponse } from 'next/og';
 
-export const runtime = 'nodejs';
+export const runtime = 'edge';
 
 export async function GET(request: Request) {
   try {
