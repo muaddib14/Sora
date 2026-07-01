@@ -1,4 +1,7 @@
+'use client';
+
 import type { Metadata } from 'next';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { ThemeToggle } from '@/components/theme-toggle';
 import '../../landing.css';
@@ -53,13 +56,18 @@ export async function generateMetadata({
 
 export default function ChallengePage({
   params,
-  searchParams,
 }: {
   params: { seed: string };
-  searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  const beatScore = searchParams.beat ? (Array.isArray(searchParams.beat) ? searchParams.beat[0] : searchParams.beat) : undefined;
-  const rank = searchParams.r ? (Array.isArray(searchParams.r) ? searchParams.r[0] : searchParams.r) : undefined;
+  const [beatScore, setBeatScore] = useState<string | undefined>();
+  const [rank, setRank] = useState<string | undefined>();
+
+  useEffect(() => {
+    const hash = window.location.hash.slice(1);
+    const params = new URLSearchParams(hash);
+    setBeatScore(params.get('beat') || undefined);
+    setRank(params.get('r') || undefined);
+  }, []);
 
   return (
     <div className="sora-landing" style={{ minHeight: '100vh', position: 'relative' }}>
