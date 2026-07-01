@@ -18,6 +18,9 @@ export const metadata: Metadata = {
   title: "SORA — keep the servers alive",
   description:
     "On-chain survival game about the infrastructure that runs the internet. Route traffic, block DDoS, climb the leaderboard.",
+  icons: {
+    icon: "/favico.ico",
+  },
 };
 
 export default function RootLayout({
