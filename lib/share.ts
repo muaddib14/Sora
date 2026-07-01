@@ -28,7 +28,9 @@ export function buildShareText(data: ShareScoreData): string {
 export function shareScore(data: ShareScoreData): void {
   const { score, seed, timeSec } = data;
   const base = 'https://www.playsora.xyz';
-  const url = `${base}/d/${seed}?beat=${score}${data.rank ? `&r=${data.rank}` : ''}&t=${Math.round(timeSec)}`;
+  // cache-buster: forces X to re-crawl fresh OG card every share
+  const cb = Date.now().toString(36);
+  const url = `${base}/d/${seed}?beat=${score}${data.rank ? `&r=${data.rank}` : ''}&t=${Math.round(timeSec)}&v=${cb}`;
   const text = buildShareText(data);
 
   const intent =
