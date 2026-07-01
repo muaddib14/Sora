@@ -1,58 +1,9 @@
 'use client';
 
-import type { Metadata } from 'next';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { ThemeToggle } from '@/components/theme-toggle';
 import '../../landing.css';
-
-export async function generateMetadata({
-  params,
-  searchParams,
-}: {
-  params: { seed: string };
-  searchParams: { [key: string]: string | string[] | undefined };
-}): Promise<Metadata> {
-  const beatScore = searchParams.beat as string | undefined;
-  const rank = searchParams.r as string | undefined;
-
-  if (!beatScore) {
-    return {
-      title: 'SORA Daily Challenge',
-      description: 'Challenge your friends on today\'s SORA daily survival challenge.',
-    };
-  }
-
-  const score = parseInt(beatScore).toLocaleString();
-  const cardUrl = `https://www.playsora.xyz/api/card?score=${beatScore}&seed=${params.seed}${rank ? `&r=${rank}` : ''}`;
-  const pageUrl = `https://www.playsora.xyz/d/${params.seed}?beat=${beatScore}${rank ? `&r=${rank}` : ''}`;
-
-  return {
-    title: `Beat ${score} on SORA daily`,
-    description: `${rank ? `Rank #${rank} challenged you to beat ${score} pts` : `Challenge: beat ${score} pts`} on today's SORA daily survival challenge. Can you keep the servers alive?`,
-    openGraph: {
-      title: `Beat ${score} on SORA daily`,
-      description: `${rank ? `Rank #${rank} challenged you to beat ${score} pts` : `Challenge: beat ${score} pts`}. Survive and score higher.`,
-      type: 'website',
-      url: pageUrl,
-      siteName: 'SORA',
-      images: [
-        {
-          url: cardUrl,
-          width: 1200,
-          height: 630,
-          alt: `SORA Challenge Card - Beat ${score} pts`,
-        },
-      ],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: `Beat ${score} on SORA daily`,
-      description: `Challenge accepted. Can you keep the servers alive?`,
-      images: [cardUrl],
-    },
-  };
-}
 
 export default function ChallengePage({
   params,
