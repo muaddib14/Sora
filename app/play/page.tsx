@@ -139,11 +139,18 @@ export default function PlayPage() {
     };
 
     const stageRef = useRef<HTMLDivElement>(null);
+    const [fakeFullscreen, setFakeFullscreen] = useState(false);
     const toggleFullscreen = () => {
         const el = stageRef.current;
         if (!el) return;
-        if (document.fullscreenElement) document.exitFullscreen();
-        else el.requestFullscreen?.();
+        // iOS Safari/WKWebView (incl. Phantom's in-app browser) never implemented
+        // the Fullscreen API. Fall back to a fixed-position overlay instead.
+        if (el.requestFullscreen || document.exitFullscreen) {
+            if (document.fullscreenElement) document.exitFullscreen();
+            else el.requestFullscreen?.();
+        } else {
+            setFakeFullscreen((v) => !v);
+        }
     };
 
     const statusLabel = gameRunning ? 'RUNNING' : gameReady ? 'READY' : 'LOADING';
@@ -239,14 +246,26 @@ export default function PlayPage() {
 
                 {/* game stage — the product, big */}
                 <div ref={stageRef} style={{
-                    position: 'relative', background: 'var(--panel)',
-                    border: '1px solid rgba(255,92,138,.15)', borderRadius: 16, overflow: 'hidden',
+                    position: fakeFullscreen ? 'fixed' : 'relative',
+                    inset: fakeFullscreen ? 0 : undefined,
+                    zIndex: fakeFullscreen ? 9999 : undefined,
+                    background: 'var(--panel)',
+                    border: fakeFullscreen ? 'none' : '1px solid rgba(255,92,138,.15)',
+                    borderRadius: fakeFullscreen ? 0 : 16, overflow: 'hidden',
                 }}>
+                    {fakeFullscreen && (
+                        <button onClick={() => setFakeFullscreen(false)} title="Exit fullscreen" style={{
+                            position: 'absolute', top: 12, right: 12, zIndex: 10000,
+                            width: 36, height: 36, borderRadius: 8, border: '1px solid rgba(255,255,255,.2)',
+                            background: 'rgba(12,14,19,.8)', color: '#fff', fontSize: 16, cursor: 'pointer',
+                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        }}>✕</button>
+                    )}
                     <iframe
                         ref={iframeRef}
                         src="/game/index.html"
                         title="SERVER: Survival Protocol"
-                        style={{ width: '100%', height: isFullscreen ? '100vh' : '82vh', minHeight: 560, border: 'none', display: 'block' }}
+                        style={{ width: '100%', height: (isFullscreen || fakeFullscreen) ? '100vh' : '82vh', minHeight: 560, border: 'none', display: 'block' }}
                     />
                     {!wallet && (
                         <div style={{
