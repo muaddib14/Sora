@@ -168,8 +168,11 @@ export default function PlayPage() {
                 </defs>
             </svg>
 
-            {/* header — identical to landing */}
-            <header>
+            {/* header — identical to landing; hidden during fake-fullscreen
+                (iOS lacks the Fullscreen API, so our CSS overlay can't out-stack
+                the header's own sticky z-index without escaping its stacking
+                context — simplest fix is to just hide it while overlay is up) */}
+            <header style={fakeFullscreen ? { display: 'none' } : undefined}>
                 <div className="wrap bar">
                     <Link className="brand" href="/">
                         <svg width="26" height="26" viewBox="0 0 26 26" style={{ color: 'var(--ink)' }}>
