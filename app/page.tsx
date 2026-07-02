@@ -14,6 +14,7 @@ import {
 import { SiThreedotjs, SiRedis, SiPostgresql, SiNginx, SiRabbitmq } from 'react-icons/si';
 import { PumpIcon, PhantomIcon, NextIcon, VercelIcon } from '@/components/brand-icons';
 import { ThemeToggle } from '@/components/theme-toggle';
+import { MobileNav } from '@/components/mobile-nav';
 import './landing.css';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -648,6 +649,13 @@ export default function Home() {
               {connecting ? 'Connecting…' : 'Connect wallet'}
             </button>
           )}
+          <MobileNav links={[
+            { href: '#play', label: 'PLAY', external: true },
+            { href: '#network', label: 'NETWORK', external: true },
+            { href: '#how', label: 'HOW IT WORKS', external: true },
+            { href: '/leaderboard', label: 'LEADERBOARD' },
+            { href: '#token', label: '$SORA', external: true },
+          ]} />
         </div>
       </header>
 

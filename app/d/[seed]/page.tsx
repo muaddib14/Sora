@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { ThemeToggle } from '@/components/theme-toggle';
+import { MobileNav } from '@/components/mobile-nav';
 import '../../landing.css';
 
 export async function generateMetadata({
@@ -80,6 +81,12 @@ export default async function ChallengePage({ params, searchParams }: ChallengeP
             <span className="dot"></span> ALL SYSTEMS OPERATIONAL
           </div>
           <ThemeToggle />
+          <MobileNav links={[
+            { href: '/play', label: 'PLAY' },
+            { href: '/#network', label: 'NETWORK' },
+            { href: '/leaderboard', label: 'LEADERBOARD' },
+            { href: '/#token', label: '$SORA' },
+          ]} />
         </div>
       </header>
 
@@ -115,7 +122,7 @@ export default async function ChallengePage({ params, searchParams }: ChallengeP
             </div>
 
             {/* Info cards */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+            <div className="responsive-grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
               <div style={{
                 background: 'var(--panel)', border: '1px solid var(--line)', borderRadius: 12, padding: '20px',
               }}>

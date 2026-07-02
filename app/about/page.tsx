@@ -81,7 +81,7 @@ export default function AboutPage() {
                 </div>
 
                 {/* mission */}
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20, marginBottom: 32 }}>
+                <div className="responsive-grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20, marginBottom: 32 }}>
                     {[
                         {
                             title: 'Game Design',

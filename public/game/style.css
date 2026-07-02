@@ -312,6 +312,93 @@ body {
   color: #dbeafe;
 }
 
+/* Mobile HUD: stats panel (top-left) and the right-side stack
+   (score details / service health / finances) are both fixed-width
+   corner overlays sized for desktop. On narrow screens they overlap
+   each other. Shrink both to ~46vw so they sit side-by-side instead,
+   and scale down their internal type/spacing to stay legible. */
+@media (max-width: 768px) {
+  #statsPanel {
+    width: 46vw !important;
+    padding: 10px !important;
+  }
+  #statsPanel h1 {
+    font-size: 15px !important;
+  }
+  #statsPanel .text-xl,
+  #statsPanel .text-2xl {
+    font-size: 13px !important;
+  }
+  #statsPanel .text-sm {
+    font-size: 10.5px !important;
+  }
+  #statsPanel .text-xs {
+    font-size: 9px !important;
+  }
+  #statsPanel .space-y-2 > * + * {
+    margin-top: 6px !important;
+  }
+  #statsPanel .w-24 {
+    width: 44px !important;
+  }
+  #statsPanel .w-10 {
+    width: 26px !important;
+  }
+  #statsPanel .gap-2 {
+    gap: 4px !important;
+  }
+
+  #rightHudStack {
+    width: 46vw !important;
+    gap: 8px !important;
+  }
+  #rightHudStack .glass-panel {
+    width: 100% !important;
+    padding: 8px !important;
+  }
+  #rightHudStack .text-xs {
+    font-size: 9px !important;
+  }
+  #rightHudStack .text-sm {
+    font-size: 10.5px !important;
+  }
+  #rightHudStack h3 {
+    font-size: 10px !important;
+    margin-bottom: 4px !important;
+  }
+
+  #objectivesPanel {
+    max-width: 60vw !important;
+    padding: 8px !important;
+  }
+  #objectivesPanel .text-sm {
+    font-size: 10.5px !important;
+  }
+
+  #sandboxPanel {
+    width: 60vw !important;
+  }
+
+  /* Time control panel (lang/save/restart/pause/play/ff): move from
+     top-center down to sit just above the main tool toolbar, so the
+     most-tapped controls (pause/play) land in mobile thumb reach and
+     the top of the canvas is fully clear. */
+  #timeControlPanel {
+    top: auto !important;
+    bottom: 165px !important;
+    padding: 6px !important;
+    gap: 4px !important;
+  }
+  #timeControlPanel .time-btn {
+    width: 34px !important;
+    height: 34px !important;
+  }
+  #timeControlPanel .time-btn svg {
+    width: 14px !important;
+    height: 14px !important;
+  }
+}
+
 /* Event indicator bar */
 .event-active-bar {
   animation: eventBarPulse 0.5s ease-in-out infinite alternate;

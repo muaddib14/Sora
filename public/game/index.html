@@ -143,7 +143,7 @@
       </div>
     </div>
 
-    <div class="absolute top-4 right-4 flex flex-col gap-3 items-end pointer-events-none">
+    <div id="rightHudStack" class="absolute top-4 right-4 flex flex-col gap-3 items-end pointer-events-none">
       <!-- Score Details Panel (Top Right) -->
       <div id="detailsPanel" class="glass-panel rounded-xl p-4 w-60 pointer-events-auto">
         <h3 data-i18n="traffic_score_details" class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2 border-b border-gray-700 pb-1">
@@ -266,8 +266,9 @@
       class="fixed top-20 left-1/2 transform -translate-x-1/2 z-50 pointer-events-none flex flex-col items-center">
     </div>
 
-    <!-- Time Control Panel (Top Center) -->
-    <div
+    <!-- Time Control Panel (Top Center; repositioned above the bottom
+         toolbar on mobile — see #timeControlPanel media query in style.css) -->
+    <div id="timeControlPanel"
       class="absolute top-4 left-1/2 transform -translate-x-1/2 glass-panel rounded-xl p-2 pointer-events-auto flex gap-2">
       <!-- Language Switcher -->
       <div class="flex items-center bg-gray-800 rounded-lg px-1 border border-gray-600 mr-1">
@@ -477,27 +478,35 @@
         <h3 data-i18n="current_objectives" class="text-xs font-bold text-gray-400 uppercase tracking-wider">
           Current Objectives
         </h3>
-        <span data-i18n="live"
-          class="text-[10px] bg-red-900/50 px-2 py-0.5 rounded text-red-400 border border-red-800 animate-pulse">LIVE</span>
+        <div class="flex items-center gap-2">
+          <span data-i18n="live"
+            class="text-[10px] bg-red-900/50 px-2 py-0.5 rounded text-red-400 border border-red-800 animate-pulse">LIVE</span>
+          <button onclick="togglePanel('objectives-content', 'objectives-panel-icon')"
+            class="text-gray-400 hover:text-white transition">
+            <span id="objectives-panel-icon" class="text-[10px]">▲</span>
+          </button>
+        </div>
       </div>
-      <ul class="text-xs text-gray-300 space-y-2 font-mono">
-        <li class="flex items-center">
-          <span class="w-2 h-2 rounded-full bg-red-500 mr-2 animate-pulse"></span>
-          <span data-i18n="survive_endless">Survive Endless Traffic</span>
-        </li>
-        <li id="goal-storage" class="flex items-center">
-          <span class="w-2 h-2 rounded-full bg-green-500 mr-2"></span>
-          <span data-i18n="route_storage">Route STATIC/UPLOAD → Storage</span>
-        </li>
-        <li id="goal-db" class="flex items-center">
-          <span class="w-2 h-2 rounded-full bg-blue-500 mr-2"></span>
-          <span data-i18n="route_db">Route READ/WRITE/SEARCH → Database</span>
-        </li>
-        <li id="goal-waf" class="flex items-center">
-          <span class="w-2 h-2 rounded-full bg-purple-500 mr-2"></span>
-          <span data-i18n="block_malicious">Block MALICIOUS with Firewall</span>
-        </li>
-      </ul>
+      <div id="objectives-content">
+        <ul class="text-xs text-gray-300 space-y-2 font-mono">
+          <li class="flex items-center">
+            <span class="w-2 h-2 rounded-full bg-red-500 mr-2 animate-pulse"></span>
+            <span data-i18n="survive_endless">Survive Endless Traffic</span>
+          </li>
+          <li id="goal-storage" class="flex items-center">
+            <span class="w-2 h-2 rounded-full bg-green-500 mr-2"></span>
+            <span data-i18n="route_storage">Route STATIC/UPLOAD → Storage</span>
+          </li>
+          <li id="goal-db" class="flex items-center">
+            <span class="w-2 h-2 rounded-full bg-blue-500 mr-2"></span>
+            <span data-i18n="route_db">Route READ/WRITE/SEARCH → Database</span>
+          </li>
+          <li id="goal-waf" class="flex items-center">
+            <span class="w-2 h-2 rounded-full bg-purple-500 mr-2"></span>
+            <span data-i18n="block_malicious">Block MALICIOUS with Firewall</span>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 

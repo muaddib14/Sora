@@ -10,11 +10,28 @@ interface WalletContextState {
     disconnecting: boolean;
 }
 
+function isMobileDevice(): boolean {
+    if (typeof navigator === 'undefined') return false;
+    return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+}
+
+/** Phantom's own in-app browser injects window.solana; a bare mobile
+ * Chrome/Safari tab never will. Redirect there instead of failing. */
+function redirectToPhantomBrowser(): void {
+    const url = encodeURIComponent(window.location.href);
+    const ref = encodeURIComponent(window.location.origin);
+    window.location.href = `https://phantom.app/ul/browse/${url}?ref=${ref}`;
+}
+
 export async function signMessage(message: string): Promise<{ signature: string; message: string } | null> {
     try {
         // Try to access Phantom or other Solana wallet
         const provider = (window as any).solana;
         if (!provider) {
+            if (isMobileDevice()) {
+                redirectToPhantomBrowser();
+                return null;
+            }
             alert('Solana wallet not found. Install Phantom wallet.');
             return null;
         }
@@ -42,6 +59,10 @@ export async function connectWallet(): Promise<string | null> {
     try {
         const provider = (window as any).solana;
         if (!provider) {
+            if (isMobileDevice()) {
+                redirectToPhantomBrowser();
+                return null;
+            }
             alert('Solana wallet not found. Install Phantom wallet.');
             return null;
         }

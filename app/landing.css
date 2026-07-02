@@ -193,6 +193,50 @@ html[data-theme='light'] .sora-landing .console {
 .sora-landing .bar .spacer {
   flex: 1;
 }
+.mobile-nav {
+  display: none;
+  position: relative;
+}
+.mobile-nav-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--ink);
+  cursor: pointer;
+}
+.mobile-nav-panel {
+  position: absolute;
+  top: 46px;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  min-width: 200px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 8px;
+  gap: 2px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+  z-index: 50;
+}
+.mobile-nav-panel a {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--ink-dim);
+  letter-spacing: 0.04em;
+  padding: 10px 12px;
+  border-radius: 8px;
+  transition: background 0.15s, color 0.15s;
+}
+.mobile-nav-panel a:hover {
+  background: var(--panel-2);
+  color: var(--ink);
+}
 .sora-landing .status-chip {
   display: flex;
   align-items: center;
@@ -888,6 +932,9 @@ html[data-theme='light'] .sora-landing .console-body::after {
   .sora-landing .status-chip {
     display: none;
   }
+  .mobile-nav {
+    display: block;
+  }
   .sora-landing .about {
     grid-template-columns: 1fr;
   }
@@ -902,6 +949,61 @@ html[data-theme='light'] .sora-landing .console-body::after {
   }
   .sora-landing .network {
     height: 320px;
+  }
+}
+
+/* ── Leaderboard: grid table on desktop, card-stack on mobile ──
+   .lb-meta uses display:contents on desktop so its 3 children (time/rep/date)
+   sit directly in the 7-column grid; on mobile it collapses to one flex line. */
+.lb-header,
+.lb-row {
+  display: grid;
+  grid-template-columns: 56px 1fr 120px 100px 100px 120px 40px;
+  align-items: center;
+}
+.lb-meta {
+  display: contents;
+}
+@media (max-width: 640px) {
+  .lb-table {
+    overflow-x: visible !important;
+  }
+  .lb-header {
+    display: none;
+  }
+  .lb-row {
+    grid-template-columns: 40px 1fr auto;
+    grid-template-areas:
+      "rank op    score"
+      "rank meta  share";
+    column-gap: 12px;
+    row-gap: 6px;
+    padding: 14px 16px !important;
+  }
+  .lb-rank {
+    grid-area: rank;
+    align-self: start;
+  }
+  .lb-op {
+    grid-area: op;
+    min-width: 0;
+  }
+  .lb-score {
+    grid-area: score;
+    justify-self: end;
+    align-self: start;
+  }
+  .lb-meta {
+    grid-area: meta;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 12px;
+  }
+  .lb-share {
+    grid-area: share;
+    justify-self: end;
+    align-self: end;
   }
 }
 .sora-landing .marquee-band {

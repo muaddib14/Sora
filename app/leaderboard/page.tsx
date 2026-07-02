@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { ThemeToggle } from '@/components/theme-toggle';
+import { MobileNav } from '@/components/mobile-nav';
 import { shareScore } from '@/lib/share';
 import '../landing.css';
 
@@ -73,6 +74,12 @@ export default function LeaderboardPage() {
                     </div>
                     <ThemeToggle />
                     <Link className="btn btn-pink" href="/play">Play Now</Link>
+                    <MobileNav links={[
+                        { href: '/play', label: 'PLAY' },
+                        { href: '/#network', label: 'NETWORK' },
+                        { href: '/leaderboard', label: 'LEADERBOARD' },
+                        { href: '/#token', label: '$SORA' },
+                    ]} />
                 </div>
             </header>
 
@@ -144,10 +151,9 @@ export default function LeaderboardPage() {
 
                 {/* table */}
                 {!loading && scores.length > 0 && (
-                    <div style={{ background: 'var(--panel)', border: '1px solid var(--line)', borderRadius: 16, overflow: 'hidden' }}>
+                    <div className="lb-table" style={{ background: 'var(--panel)', border: '1px solid var(--line)', borderRadius: 16, overflowX: 'auto' }}>
                         {/* table header */}
-                        <div style={{
-                            display: 'grid', gridTemplateColumns: '56px 1fr 120px 100px 100px 120px 40px',
+                        <div className="lb-header" style={{
                             padding: '12px 24px', borderBottom: '1px solid var(--line)',
                             background: 'var(--panel-2)',
                         }}>
@@ -159,17 +165,15 @@ export default function LeaderboardPage() {
                         {scores.map((score, idx) => {
                             const badge = rankBadge(idx);
                             return (
-                                <div key={score.id} style={{
-                                    display: 'grid', gridTemplateColumns: '56px 1fr 120px 100px 100px 120px 40px',
+                                <div key={score.id} className="lb-row" style={{
                                     padding: '16px 24px', borderBottom: '1px solid var(--line-soft)',
-                                    alignItems: 'center',
                                     transition: 'background .15s',
                                 }}
                                     onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,92,138,.04)')}
                                     onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
                                 >
                                     {/* rank */}
-                                    <div>
+                                    <div className="lb-rank">
                                         <span style={{
                                             display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
                                             width: 28, height: 28, borderRadius: 6,
@@ -179,9 +183,9 @@ export default function LeaderboardPage() {
                                     </div>
 
                                     {/* operator */}
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                                    <div className="lb-op" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                                         <div style={{
-                                            width: 32, height: 32, borderRadius: 8,
+                                            width: 32, height: 32, borderRadius: 8, flexShrink: 0,
                                             background: `hsl(${(score.wallet.charCodeAt(2) * 137) % 360},45%,42%)`,
                                             border: '1px solid var(--line)',
                                             display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -189,8 +193,8 @@ export default function LeaderboardPage() {
                                         }}>
                                             {(score.operators?.handle || score.wallet).slice(0, 2).toUpperCase()}
                                         </div>
-                                        <div>
-                                            <div style={{ fontSize: 14, fontWeight: 600, color: col.fg }}>
+                                        <div style={{ minWidth: 0 }}>
+                                            <div style={{ fontSize: 14, fontWeight: 600, color: col.fg, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                                                 {score.operators?.handle || `${score.wallet.slice(0, 6)}…${score.wallet.slice(-4)}`}
                                             </div>
                                             {score.operators?.handle && (
@@ -202,23 +206,22 @@ export default function LeaderboardPage() {
                                     </div>
 
                                     {/* score */}
-                                    <div style={{ fontSize: 18, fontWeight: 700, fontFamily: 'monospace', color: col.pink }}>{score.score.toLocaleString()}</div>
+                                    <div className="lb-score" style={{ fontSize: 18, fontWeight: 700, fontFamily: 'monospace', color: col.pink }}>{score.score.toLocaleString()}</div>
 
-                                    {/* time */}
-                                    <div style={{ fontSize: 13, fontFamily: 'monospace', color: col.sub }}>{(score.elapsed_ms / 1000).toFixed(1)}s</div>
-
-                                    {/* rep */}
-                                    <div style={{ fontSize: 13, fontFamily: 'monospace', color: repColor(score.reputation) }}>
-                                        {score.reputation?.toFixed(1) ?? '—'}%
-                                    </div>
-
-                                    {/* date */}
-                                    <div style={{ fontSize: 12, color: col.label }}>
-                                        {new Date(score.created_at).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: '2-digit' })}
+                                    {/* time / rep / date — display:contents on desktop, one flex line on mobile */}
+                                    <div className="lb-meta">
+                                        <div style={{ fontSize: 13, fontFamily: 'monospace', color: col.sub }}>{(score.elapsed_ms / 1000).toFixed(1)}s</div>
+                                        <div style={{ fontSize: 13, fontFamily: 'monospace', color: repColor(score.reputation) }}>
+                                            {score.reputation?.toFixed(1) ?? '—'}%
+                                        </div>
+                                        <div style={{ fontSize: 12, color: col.label }}>
+                                            {new Date(score.created_at).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: '2-digit' })}
+                                        </div>
                                     </div>
 
                                     {/* share */}
                                     <button
+                                        className="lb-share"
                                         onClick={() => shareScore({
                                             score: score.score,
                                             timeSec: score.elapsed_ms / 1000,
@@ -226,13 +229,21 @@ export default function LeaderboardPage() {
                                             seed: new Date().toISOString().split('T')[0],
                                         })}
                                         style={{
-                                            background: 'transparent', border: 'none', color: 'var(--pink)',
+                                            background: 'transparent', border: 'none', color: 'var(--ink-dim)',
                                             cursor: 'pointer', padding: 0, lineHeight: 0,
-                                            fontSize: 18,
+                                            display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
                                         }}
+                                        onMouseEnter={e => (e.currentTarget.style.color = 'var(--pink)')}
+                                        onMouseLeave={e => (e.currentTarget.style.color = 'var(--ink-dim)')}
                                         title="Share score"
                                     >
-                                        ✦
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                            <circle cx="18" cy="5" r="3" />
+                                            <circle cx="6" cy="12" r="3" />
+                                            <circle cx="18" cy="19" r="3" />
+                                            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+                                            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+                                        </svg>
                                     </button>
                                 </div>
                             );

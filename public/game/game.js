@@ -34,6 +34,28 @@ window.addEventListener('message', (e) => {
 document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => emitToParent('game:ready', {}), 500);
 });
+
+// Mobile: collapse the secondary HUD panels by default so the canvas
+// underneath is actually reachable. User can still tap ▼ to expand.
+// Called on load AND on game start (resetGame may re-show panels).
+function collapseMobileHudPanels() {
+    if (window.innerWidth > 768) return;
+    [
+        ['health-panel-content', 'health-panel-icon'],
+        ['finances-panel-content', 'finances-panel-icon'],
+        ['objectives-content', 'objectives-panel-icon'],
+    ].forEach(([contentId, iconId]) => {
+        const content = document.getElementById(contentId);
+        const icon = document.getElementById(iconId);
+        if (content) content.classList.add('hidden');
+        if (icon) icon.innerText = '▼';
+    });
+}
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', collapseMobileHudPanels);
+} else {
+    collapseMobileHudPanels();
+}
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => emitToParent('game:ready', {}), 500);
@@ -1715,6 +1737,7 @@ window.togglePanel = (contentId, iconId) => {
 window.startGame = () => {
     document.getElementById("main-menu-modal").classList.add("hidden");
     resetGame();
+    collapseMobileHudPanels();
 
     if (window.tutorial) {
         setTimeout(() => {
@@ -1726,6 +1749,7 @@ window.startGame = () => {
 window.startSandbox = () => {
     document.getElementById("main-menu-modal").classList.add("hidden");
     resetGame("sandbox");
+    collapseMobileHudPanels();
 };
 
 // ===================== CAMPAIGN MODE =====================
@@ -2425,7 +2449,7 @@ window.addEventListener("keyup", (e) => {
 
 container.addEventListener("contextmenu", (e) => e.preventDefault());
 
-container.addEventListener("mousedown", (e) => {
+function handlePointerDown(e) {
     if (!STATE.isRunning) return;
 
     if (e.button === 2 || e.button === 1) {
@@ -2542,9 +2566,9 @@ container.addEventListener("mousedown", (e) => {
             }
         }
     }
-});
+}
 
-container.addEventListener("mousemove", (e) => {
+function handlePointerMove(e) {
     if (isDraggingNode && draggedNode) {
         const hit = getIntersect(e.clientX, e.clientY);
         if (hit.pos) {
@@ -2816,7 +2840,7 @@ container.addEventListener("mousemove", (e) => {
     }
 
     container.style.cursor = cursor;
-});
+}
 
         // clear failure list
         document.getElementById('clear-all').addEventListener('click',()=>{
@@ -2870,7 +2894,7 @@ function setupUITooltips() {
 // Call setup
 setupUITooltips();
 
-container.addEventListener("mouseup", (e) => {
+function handlePointerUp(e) {
     if (e.button === 2 || e.button === 1) {
         isPanning = false;
         container.style.cursor = "default";
@@ -2898,7 +2922,71 @@ container.addEventListener("mouseup", (e) => {
         container.style.cursor = "default";
         return;
     }
-});
+}
+
+container.addEventListener("mousedown", handlePointerDown);
+container.addEventListener("mousemove", handlePointerMove);
+container.addEventListener("mouseup", handlePointerUp);
+
+/* ── Touch support (mobile) ──
+   Single touch maps 1:1 to left-click drag/build/select flows above.
+   Two-finger pinch drives zoom (replaces wheel, which touchscreens don't have). */
+let lastPinchDistance = null;
+
+function touchToPointerEvent(touch, button) {
+    return {
+        clientX: touch.clientX,
+        clientY: touch.clientY,
+        button: button || 0,
+        preventDefault: () => {},
+        stopPropagation: () => {},
+    };
+}
+
+function pinchDistance(touches) {
+    const dx = touches[0].clientX - touches[1].clientX;
+    const dy = touches[0].clientY - touches[1].clientY;
+    return Math.sqrt(dx * dx + dy * dy);
+}
+
+container.addEventListener("touchstart", (e) => {
+    if (e.touches.length === 1) {
+        e.preventDefault();
+        handlePointerDown(touchToPointerEvent(e.touches[0], 0));
+    } else if (e.touches.length === 2) {
+        e.preventDefault();
+        lastPinchDistance = pinchDistance(e.touches);
+    }
+}, { passive: false });
+
+container.addEventListener("touchmove", (e) => {
+    if (e.touches.length === 1) {
+        e.preventDefault();
+        handlePointerMove(touchToPointerEvent(e.touches[0], 0));
+    } else if (e.touches.length === 2) {
+        e.preventDefault();
+        const dist = pinchDistance(e.touches);
+        if (lastPinchDistance != null) {
+            const delta = (dist - lastPinchDistance) * zoomSpeed * 6;
+            const newZoom = Math.max(minZoom, Math.min(maxZoom, currentZoom + delta));
+            if (newZoom !== currentZoom) {
+                currentZoom = newZoom;
+                camera.zoom = currentZoom;
+                camera.updateProjectionMatrix();
+            }
+        }
+        lastPinchDistance = dist;
+    }
+}, { passive: false });
+
+container.addEventListener("touchend", (e) => {
+    if (e.touches.length === 0) {
+        lastPinchDistance = null;
+        handlePointerUp({ button: 0 });
+    } else if (e.touches.length < 2) {
+        lastPinchDistance = null;
+    }
+}, { passive: false });
 
 function updateConnectionsForNode(nodeId) {
     STATE.connections.forEach((c) => {
