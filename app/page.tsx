@@ -629,7 +629,7 @@ export default function Home() {
             SORA
           </a>
           <nav className="nav">
-            <a href="#play">PLAY</a>
+            <a href="play">PLAY</a>
             <a href="#network">NETWORK</a>
             <a href="#how">HOW IT WORKS</a>
             <Link href="/leaderboard">LEADERBOARD</Link>
@@ -650,7 +650,7 @@ export default function Home() {
             </button>
           )}
           <MobileNav links={[
-            { href: '#play', label: 'PLAY', external: true },
+            { href: 'play', label: 'PLAY', external: true },
             { href: '#network', label: 'NETWORK', external: true },
             { href: '#how', label: 'HOW IT WORKS', external: true },
             { href: '/leaderboard', label: 'LEADERBOARD' },
