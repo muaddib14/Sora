@@ -212,7 +212,7 @@ export default function PlayPage() {
             <div style={{ position: 'relative', zIndex: 1, maxWidth: 1480, margin: '0 auto', padding: '20px 20px 48px' }}>
 
                 {/* compact control bar above the stage */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 14, flexWrap: 'wrap' }}>
+                <div className="game-control-bar" style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 14, flexWrap: 'wrap' }}>
                     <span style={{
                         padding: '4px 12px', background: 'rgba(255,92,138,.1)', border: '1px solid rgba(255,92,138,.3)',
                         borderRadius: 20, fontSize: 12, color: 'var(--pink)', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase',
@@ -268,7 +268,7 @@ export default function PlayPage() {
                         ref={iframeRef}
                         src="/game/index.html"
                         title="SERVER: Survival Protocol"
-                        style={{ width: '100%', height: (isFullscreen || fakeFullscreen) ? '100vh' : '82vh', minHeight: 560, border: 'none', display: 'block' }}
+                        style={{ width: '100%', height: (isFullscreen || fakeFullscreen) ? '100vh' : '82vh', minHeight: 'min(560px, 70vh)', border: 'none', display: 'block' }}
                     />
                     {!wallet && (
                         <div style={{
@@ -315,7 +315,7 @@ export default function PlayPage() {
                             </button>
                         </div>
 
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 20 }}>
+                        <div className="result-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 20 }}>
                             {[
                                 { label: 'Final Score', value: String(currentScore.score) },
                                 { label: 'Reputation', value: `${currentScore.reputation.toFixed(1)}%` },

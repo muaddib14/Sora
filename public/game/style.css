@@ -412,3 +412,13 @@ body {
     opacity: 1;
   }
 }
+
+/* ── Mobile: reduce modal padding on narrow screens ── */
+@media (max-width: 380px) {
+  #save-modal > div {
+    padding: 1.5rem !important;
+  }
+  #save-modal h1 {
+    font-size: 2rem !important;
+  }
+}

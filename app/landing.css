@@ -1172,3 +1172,45 @@ html[data-theme='light'] .sora-landing .console-body::after {
     mask-image: none;
   }
 }
+
+/* ── Mobile responsive fixes for game result modal ── */
+@media (max-width: 480px) {
+  .result-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ── Mobile control bar: stack vertically on narrow screens ── */
+@media (max-width: 400px) {
+  .game-control-bar {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+  }
+  .game-control-bar span {
+    width: 100%;
+    font-size: 11px !important;
+  }
+}
+
+/* ── Token page grid responsiveness ── */
+@media (max-width: 520px) {
+  .token-utility-grid,
+  .token-spec-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ── Focus states for accessibility ── */
+button:focus-visible {
+  outline: 2px solid var(--pink);
+  outline-offset: 2px;
+}
+
+.btn:focus-visible,
+.time-btn:focus-visible,
+.service-btn:focus-visible {
+  outline: 2px solid var(--pink);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(255, 92, 138, 0.2);
+}

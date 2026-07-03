@@ -57,7 +57,7 @@ export default function TokenPage() {
                         fontFamily: "'Clash Display',sans-serif", fontSize: 20, fontWeight: 700,
                         color: col.fg, marginBottom: 20, letterSpacing: '-0.01em',
                     }}>Utility</h2>
-                    <div className="responsive-grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+                    <div className="token-utility-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
                         {[
                             { title: 'Tournament Entry', desc: 'Pay entry fees for ranked seasons and special events' },
                             { title: 'Season Pass', desc: 'Unlock exclusive cosmetics, skins, and rewards' },
@@ -84,7 +84,7 @@ export default function TokenPage() {
                         fontFamily: "'Clash Display',sans-serif", fontSize: 18, fontWeight: 700,
                         color: col.fg, marginBottom: 24, letterSpacing: '-0.01em',
                     }}>Token Specification</h2>
-                    <div className="responsive-grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
+                    <div className="token-spec-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
                         {[
                             { label: 'Network', value: 'Solana' },
                             { label: 'Type', value: 'SPL Token' },
