@@ -1,3 +1,6 @@
+// Vendored from https://github.com/pshenok/server-survival (MIT License)
+// See public/game/LICENSE for full license text.
+
 const RU_TRANSLATIONS = {
     "title": "СЕРВЕР: Протокол Выживания",
     "survival": "ВЫЖИВАНИЕ",

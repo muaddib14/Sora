@@ -1,3 +1,6 @@
+// Vendored from https://github.com/pshenok/server-survival (MIT License)
+// See public/game/LICENSE for full license text.
+
 const TRAFFIC_TYPES = {
   STATIC: "STATIC",
   READ: "READ",

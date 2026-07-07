@@ -1,3 +1,6 @@
+// Vendored from https://github.com/pshenok/server-survival (MIT License)
+// See public/game/LICENSE for full license text.
+
 const KO_TRANSLATIONS = {
     "title": "서버: 생존 프로토콜",
     "survival": "생존",

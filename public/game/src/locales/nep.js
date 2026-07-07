@@ -1,3 +1,6 @@
+// Vendored from https://github.com/pshenok/server-survival (MIT License)
+// See public/game/LICENSE for full license text.
+
 const NE_TRANSLATIONS = {
     "title": "सर्भर: अस्तित्व प्रोटोकल",
     "survival": "अस्तित्व",

@@ -1,3 +1,6 @@
+// Vendored from https://github.com/pshenok/server-survival (MIT License)
+// See public/game/LICENSE for full license text.
+
 const PT_BR_TRANSLATIONS = {
     "title": "SERVER: Survival Protocol",
     "survival": "SOBREVIVÊNCIA",

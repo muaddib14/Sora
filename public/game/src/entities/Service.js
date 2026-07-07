@@ -1,3 +1,6 @@
+// Vendored from https://github.com/pshenok/server-survival (MIT License)
+// See public/game/LICENSE for full license text.
+
 class Service {
   constructor(type, pos) {
     this.id = "svc_" + Math.random().toString(36).substr(2, 9);

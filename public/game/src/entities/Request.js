@@ -1,3 +1,6 @@
+// Vendored from https://github.com/pshenok/server-survival (MIT License)
+// See public/game/LICENSE for full license text.
+
 class Request {
     constructor(type) {
         this.id = Math.random().toString(36);

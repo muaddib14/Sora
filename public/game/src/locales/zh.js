@@ -1,3 +1,6 @@
+// Vendored from https://github.com/pshenok/server-survival (MIT License)
+// See public/game/LICENSE for full license text.
+
 const ZH_TRANSLATIONS = {
     "title": "服务器：生存协议",
     "survival": "生存模式",
