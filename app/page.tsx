@@ -15,6 +15,7 @@ import { SiThreedotjs, SiRedis, SiPostgresql, SiNginx, SiRabbitmq } from 'react-
 import { PumpIcon, PhantomIcon, NextIcon, VercelIcon } from '@/components/brand-icons';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { MobileNav } from '@/components/mobile-nav';
+import { HeroScene } from '@/components/hero-scene';
 import './landing.css';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -623,15 +624,12 @@ export default function Home() {
       <header>
         <div className="wrap bar">
           <a className="brand" href="#top">
-            <svg width="26" height="26" viewBox="0 0 26 26" style={{ color: '#fff' }}>
-              <use href="#mark" />
-            </svg>{' '}
             SORA
           </a>
           <nav className="nav">
             <a href="play">PLAY</a>
             <a href="#network">NETWORK</a>
-            <a href="#how">HOW IT WORKS</a>
+            <Link href="/how-to-play">HOW TO PLAY</Link>
             <Link href="/leaderboard">LEADERBOARD</Link>
             <a href="#token">$SORA</a>
           </nav>
@@ -652,7 +650,7 @@ export default function Home() {
           <MobileNav links={[
             { href: 'play', label: 'PLAY', external: true },
             { href: '#network', label: 'NETWORK', external: true },
-            { href: '#how', label: 'HOW IT WORKS', external: true },
+            { href: '/how-to-play', label: 'HOW TO PLAY' },
             { href: '/leaderboard', label: 'LEADERBOARD' },
             { href: '#token', label: '$SORA', external: true },
           ]} />
@@ -660,16 +658,13 @@ export default function Home() {
       </header>
 
       <a id="top"></a>
-      <div className="wrap">
-        <section className="hero">
-          <div>
-            <span className="eyebrow load-in d1">
-              <span className="dot"></span> Uptime: 99.99% · 0 critical
-            </span>
+      <section className="hero hero-center">
+        <HeroScene />
+        <div className="hero-scrim" aria-hidden="true" />
+        <div className="wrap hero-inner hero-inner-center">
+          <div className="hero-copy-panel">
             <h1 className="load-in d2">
-              Keep the
-              <br />
-              servers <span className="hl">alive.</span>
+              Keep the servers <span className="hl">alive.</span>
             </h1>
             <p className="lede load-in d3">
               <b>$SORA</b> is an on-chain survival game about the infrastructure that actually runs
@@ -685,84 +680,13 @@ export default function Home() {
               >
                 ▶ {connecting ? 'Connecting…' : wallet ? 'Launch console' : 'Connect & play'}
               </button>
-              <a className="btn btn-ghost btn-lg" href="#token">
-                View on pump.fun
-              </a>
             </div>
-            <p className="ticker-note load-in d4">
-              ticker <span>$SORA</span> · solana · fair launch on pump.fun
-            </p>
-            <div className="trust-strip load-in d4">
-              <span><span className="dot" style={{ width: 6, height: 6 }}></span> Fair launch</span>
-              <span className="sep">·</span>
-              <span>No presale</span>
-              <span className="sep">·</span>
-              <span>No team allocation</span>
-              <span className="sep">·</span>
-              <span>MIT open-source</span>
-            </div>
-          </div>
-          <div className="console load-in d3" id="play">
-            <div className="console-top">
-              <span className="tdot"></span>
-              <span className="tdot"></span>
-              <span className="tdot"></span>
-              <span className="tlabel">sora://noc/live-feed</span>
-            </div>
-            <div className="console-body">
-              <canvas id="hero-3d" style={{ width: '100%', aspectRatio: '1 / 1', display: 'block' }}></canvas>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                id="hero-fallback"
-                src="/sora-hero.jpg"
-                alt="Sora, the NOC operator, at her datacenter ops desk with her server-unit companion"
-                style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
-              />
-              <div className="ov ov-up">
-                <div className="big">99.99%</div>
-                <div className="cap">uptime</div>
-              </div>
-              <div className="ov ov-rps">
-                <div className="big">
-                  <span id="ovRps">12,480</span>/s
-                </div>
-                <div className="cap">requests handled</div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
-
-      <div className="wrap">
-        <div className="telemetry-cap reveal">
-          <span className="dot amber"></span> SIMULATED NOC FEED · in-game telemetry, not live user metrics
-        </div>
-        <div className="telemetry reveal">
-          <div className="tcell">
-            <div className="num c-green">99.99%</div>
-            <div className="lbl">Uptime</div>
-          </div>
-          <div className="tcell">
-            <div className="num c-pink" id="tRps">
-              12,480
-            </div>
-            <div className="lbl">Requests / sec</div>
-          </div>
-          <div className="tcell">
-            <div className="num" id="tOps">
-              1,204
-            </div>
-            <div className="lbl">Operators (sim)</div>
-          </div>
-          <div className="tcell">
-            <div className="num c-amber" id="tWaves">
-              38,902
-            </div>
-            <div className="lbl">DDoS waves blocked</div>
           </div>
         </div>
-      </div>
+      </section>
 
+      {false && (
+      <>
       <div className="marquee-band">
         <div className="marquee-label">
           <span className="dotp"></span>RUNNING ON REAL INFRASTRUCTURE
@@ -966,8 +890,10 @@ export default function Home() {
           </div>
         </div>
       </div>
+      </>
+      )}
 
-      <div className="wrap">
+      <div className="wrap" style={{ display: 'none' }}>
         <section id="how">
           <span className="sec-eyebrow reveal">The loop</span>
           <h2 className="reveal">
@@ -1020,6 +946,8 @@ export default function Home() {
         </section>
       </div>
 
+      {false && (
+      <>
       <div className="wrap">
         <section id="token">
           <span className="sec-eyebrow reveal">The token</span>
@@ -1123,6 +1051,8 @@ export default function Home() {
           </div>
         </section>
       </div>
+      </>
+      )}
 
       <footer>
         <div className="wrap foot">

@@ -157,7 +157,7 @@ html[data-theme='light'] .sora-landing .console {
   top: 0;
   z-index: 30;
   backdrop-filter: blur(10px);
-  background: var(--bg);
+  background: color-mix(in srgb, var(--bg) 55%, transparent);
   border-bottom: 1px solid var(--line);
 }
 .sora-landing .bar {
@@ -283,11 +283,76 @@ html[data-theme='light'] .sora-landing .console {
   color: var(--pink-soft);
 }
 .sora-landing .hero {
+  position: relative;
+  overflow: hidden;
+  min-height: 92vh;
+  display: flex;
+  align-items: center;
+}
+.sora-landing .hero.hero-center {
+  /* pulled up under the sticky header (60px) so the scene runs full-bleed behind it;
+     +60px on height keeps the section exactly one viewport tall so nothing peeks below the fold */
+  min-height: calc(100vh + 60px);
+  margin-top: -60px;
+  padding-top: 60px;
+}
+.hero-scene-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  display: block;
+}
+.hero-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    radial-gradient(42% 50% at 50% 44%, color-mix(in srgb, var(--bg) 62%, transparent), transparent 78%),
+    linear-gradient(180deg, transparent 68%, var(--bg) 100%);
+  pointer-events: none;
+}
+.sora-landing .hero-inner {
+  position: relative;
+  z-index: 2;
   display: grid;
   grid-template-columns: 1.05fr 0.95fr;
   gap: 40px;
   align-items: center;
   padding: 54px 0 36px;
+  width: 100%;
+}
+@media (max-width: 860px) {
+  .sora-landing .hero-inner {
+    grid-template-columns: 1fr;
+  }
+}
+.sora-landing .hero-inner-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0 20px;
+  max-width: 760px;
+  margin: 0 auto;
+}
+.sora-landing .hero-inner-center h1,
+.sora-landing .hero-inner-center .lede,
+.sora-landing .hero-inner-center .eyebrow {
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9), 0 4px 32px rgba(0, 0, 0, 0.8);
+}
+.sora-landing .hero-inner-center .lede {
+  margin-left: auto;
+  margin-right: auto;
+}
+.sora-landing .hero-copy-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.sora-landing .hero-inner-center .cta-row {
+  justify-content: center;
 }
 .sora-landing .eyebrow {
   display: inline-flex;
@@ -904,6 +969,9 @@ html[data-theme='light'] .sora-landing .console-body::after {
 }
 @media (max-width: 880px) {
   .sora-landing .hero {
+    min-height: auto;
+  }
+  .sora-landing .hero-inner {
     grid-template-columns: 1fr;
     gap: 30px;
     padding: 40px 0 28px;
