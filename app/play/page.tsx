@@ -11,7 +11,6 @@ import {
     setStoredWallet,
 } from '@/lib/wallet';
 import { submitScore } from '@/lib/score-submit';
-import { ThemeToggle } from '@/components/theme-toggle';
 import { MobileNav } from '@/components/mobile-nav';
 import { useTheme } from '@/lib/theme';
 import { shareScore } from '@/lib/share';
@@ -190,7 +189,6 @@ export default function PlayPage() {
                     <div className="status-chip">
                         <span className="dot"></span> ALL SYSTEMS OPERATIONAL
                     </div>
-                    <ThemeToggle />
                     {wallet ? (
                         <button className="btn btn-pink" type="button" onClick={handleDisconnectWallet} title="Click to disconnect">
                             {wallet.slice(0, 6)}…{wallet.slice(-4)}

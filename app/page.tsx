@@ -13,7 +13,6 @@ import {
 } from '@/lib/wallet';
 import { SiThreedotjs, SiRedis, SiPostgresql, SiNginx, SiRabbitmq } from 'react-icons/si';
 import { PumpIcon, PhantomIcon, NextIcon, VercelIcon } from '@/components/brand-icons';
-import { ThemeToggle } from '@/components/theme-toggle';
 import { MobileNav } from '@/components/mobile-nav';
 import { HeroScene } from '@/components/hero-scene';
 import './landing.css';
@@ -637,7 +636,6 @@ export default function Home() {
           <div className="status-chip">
             <span className="dot"></span> ALL SYSTEMS OPERATIONAL
           </div>
-          <ThemeToggle />
           {wallet ? (
             <button className="btn btn-pink" type="button" onClick={handleDisconnect} title="Click to disconnect">
               {shortAddr}

@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { ThemeToggle } from '@/components/theme-toggle';
 import { MobileNav } from '@/components/mobile-nav';
 import { shareScore } from '@/lib/share';
 import '../landing.css';
@@ -72,7 +71,6 @@ export default function LeaderboardPage() {
                     <div className="status-chip">
                         <span className="dot"></span> ALL SYSTEMS OPERATIONAL
                     </div>
-                    <ThemeToggle />
                     <Link className="btn btn-pink" href="/play">Play Now</Link>
                     <MobileNav links={[
                         { href: '/play', label: 'PLAY' },

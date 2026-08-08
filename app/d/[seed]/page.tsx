@@ -1,6 +1,5 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { ThemeToggle } from '@/components/theme-toggle';
 import { MobileNav } from '@/components/mobile-nav';
 import '../../landing.css';
 
@@ -80,7 +79,6 @@ export default async function ChallengePage({ params, searchParams }: ChallengeP
           <div className="status-chip">
             <span className="dot"></span> ALL SYSTEMS OPERATIONAL
           </div>
-          <ThemeToggle />
           <MobileNav links={[
             { href: '/play', label: 'PLAY' },
             { href: '/#network', label: 'NETWORK' },
