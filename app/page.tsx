@@ -679,6 +679,14 @@ export default function Home() {
                 ▶ {connecting ? 'Connecting…' : wallet ? 'Launch console' : 'Connect & play'}
               </button>
             </div>
+            <a
+              className="hero-ca load-in d4"
+              href="https://pump.fun/coin/FZp7SQfAErvbJwM46P7yySRCmoj3b7EJTSW47vhFpump"
+              target="_blank"
+              rel="noreferrer"
+            >
+              CA: FZp7SQfAErvbJwM46P7yySRCmoj3b7EJTSW47vhFpump
+            </a>
           </div>
         </div>
       </section>
@@ -993,13 +1001,19 @@ export default function Home() {
                 Fair launch on pump.fun. No presale, no team allocation games — just the console,
                 the board, and the community running it.
               </p>
-              <div className="ca">
+              <a
+                className="ca"
+                href="https://pump.fun/coin/FZp7SQfAErvbJwM46P7yySRCmoj3b7EJTSW47vhFpump"
+                target="_blank"
+                rel="noreferrer"
+                style={{ textDecoration: 'none', display: 'block' }}
+              >
                 <span className="lbl">CONTRACT</span>
-                <span className="val">pump.fun — TBA at launch</span>
-              </div>
+                <span className="val">FZp7SQfAErvbJwM46P7yySRCmoj3b7EJTSW47vhFpump</span>
+              </a>
               <button
                 className="btn btn-pink"
-                onClick={() => window.open('https://pump.fun', '_blank')}
+                onClick={() => window.open('https://pump.fun/coin/FZp7SQfAErvbJwM46P7yySRCmoj3b7EJTSW47vhFpump', '_blank')}
               >
                 Launch on pump.fun →
               </button>

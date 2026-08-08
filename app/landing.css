@@ -346,6 +346,27 @@ html[data-theme='light'] .sora-landing .console {
   margin-left: auto;
   margin-right: auto;
 }
+.sora-landing .hero-ca {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--bg) 55%, transparent);
+  backdrop-filter: blur(4px);
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink-dim);
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  transition: border-color 0.15s, color 0.15s;
+}
+.sora-landing .hero-ca:hover {
+  border-color: var(--pink);
+  color: var(--ink);
+}
 .sora-landing .hero-copy-panel {
   display: flex;
   flex-direction: column;
