@@ -235,7 +235,7 @@ export default function PlayPage() {
 
                     <button onClick={toggleFullscreen} disabled={!gameReady} title="Fullscreen" style={{
                         display: 'flex', alignItems: 'center', gap: 7, padding: '8px 14px',
-                        background: theme === 'light' ? 'rgba(0,0,0,.05)' : 'rgba(255,255,255,.05)',
+                        background: 'rgba(255,255,255,.05)',
                         border: `1px solid var(--line)`,
                         borderRadius: 8, color: gameReady ? 'var(--ink)' : 'var(--ink-dim)', fontSize: 13,
                         fontFamily: 'monospace', cursor: gameReady ? 'pointer' : 'not-allowed',
@@ -271,7 +271,7 @@ export default function PlayPage() {
                     {!wallet && (
                         <div style={{
                             position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',
-                            background: theme === 'light' ? 'rgba(0,0,0,.5)' : 'rgba(12,14,19,.78)', backdropFilter: 'blur(3px)', zIndex: 5,
+                            background: 'rgba(12,14,19,.78)', backdropFilter: 'blur(3px)', zIndex: 5,
                         }}>
                             <div style={{ textAlign: 'center', maxWidth: 340 }}>
                                 <div style={{ fontFamily: "'Clash Display',sans-serif", fontSize: 22, fontWeight: 700, color: 'var(--ink)', marginBottom: 10 }}>
@@ -294,7 +294,7 @@ export default function PlayPage() {
             {currentScore && showResult && (
                 <div style={{
                     position: 'fixed', inset: 0, zIndex: 100, display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    background: theme === 'light' ? 'rgba(0,0,0,.6)' : 'rgba(8,10,14,.72)', backdropFilter: 'blur(6px)', padding: 20,
+                    background: 'rgba(8,10,14,.72)', backdropFilter: 'blur(6px)', padding: 20,
                 }}>
                     <div style={{
                         width: '100%', maxWidth: 460, background: 'var(--panel)',
@@ -320,7 +320,7 @@ export default function PlayPage() {
                                 { label: 'Time Alive', value: `${(currentScore.elapsedMs / 1000).toFixed(1)}s` },
                                 { label: 'Budget Left', value: `$${Math.round(currentScore.money)}` },
                             ].map(({ label, value }) => (
-                                <div key={label} style={{ background: theme === 'light' ? 'rgba(0,0,0,.04)' : 'rgba(255,255,255,.03)', borderRadius: 8, padding: '12px 16px' }}>
+                                <div key={label} style={{ background: 'rgba(255,255,255,.03)', borderRadius: 8, padding: '12px 16px' }}>
                                     <div style={{ fontSize: 11, color: 'var(--ink-dim)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 4 }}>{label}</div>
                                     <div style={{ fontSize: 20, fontWeight: 700, fontFamily: 'monospace', color: 'var(--ink)' }}>{value}</div>
                                 </div>
